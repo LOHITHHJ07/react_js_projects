@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>form (project 1)</title>
+</head>
+<body>
+    <h1> Form project</h1>    
+    <form action="results.html" method="GET">
+        <table>
+    <tr>
+         <td><label for="username">Username</label></td>
+         <td><input type="text" name="name" id="username"></td>
+    </tr>
+    <tr>
+        <td><label for="password">Password</label></td>
+        <td><input type="password" name="password" id="password"></td> 
+    </tr>
+    <tr>
+         <td><label for="city">City of <br> employement</label></td>
+        <td><input type="text" name="city" id="city"></td>
+    
+    </tr>
+    <tr>
+         <td><label for="webserver"> Web server</label></td>
+        <td><select name="webserver" id="webserver">
+            <option value="none">choose server</option>
+            <option value="Apache">Apache</option>
+            <option value="IIS">IIS</option>
+            <option value="Jagsaw">Jagsaw</option>
+        </select></td>
+        
+    </tr>
+     <tr>
+            <td> please  <br> specify your role  </td> 
+        
+             <td><label for="admin"> </label>
+            <input type="radio" name="role" id="admin">Admin
+             <br>
+            <label for="engineer"> </label>
+            <input type="radio" name="role" id="engineer">Engineer
+            <br>
+            <label for="manager"> </label>
+            <input type="radio" name="role" id="manager">Manager
+            <br>
+            <label for="guest"> </label>
+            <input type="radio" name="role" id="guest">Guest
+        </td>
+        </tr>
+    <tr>
+        <td>
+        Single  Sign-on  <br> to the following </td>
+   
+        <td><label for="Mail"> </label>
+       <input type="checkbox" name="sign" id="admin">Mail
+        <br>
+       <label for="Payroll"> </label>
+       <input type="checkbox" name="sign" id="engineer">Payroll
+       <br>
+       <label for="Self-service"> </label>
+       <input type="checkbox" name="sign" id="manager">Self-service
+    </td>
+    </tr>
+
+     <tr> <td> </td><td><button>Login</button> <button>Reset  </button></td></tr>
+</table>
+    </form>
+    
+</body>
+</html>
