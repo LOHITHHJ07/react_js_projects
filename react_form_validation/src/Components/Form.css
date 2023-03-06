@@ -1,0 +1,28 @@
+.form-table
+{
+    display: inline;
+    text-align: center;
+}
+#role
+{
+    display: flex;
+    flex-direction: column;
+}
+#sign-in
+{
+    display: flex;
+    flex-direction: column;
+}
+#log
+{
+
+    text-align: start;
+}
+h1{
+    font-size: 50px;
+}
+.error
+{
+    color: red;
+    font-size: 20px;
+}
