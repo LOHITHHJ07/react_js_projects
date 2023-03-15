@@ -1,0 +1,11 @@
+.input
+{
+    display: flex;
+    flex-direction: row;
+    text-align: left; 
+    padding: 5px;
+}
+.span{
+    display: flex;
+
+}
