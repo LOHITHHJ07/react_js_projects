@@ -7,6 +7,7 @@ import Badge from "react-bootstrap/Badge";
 
 function Cartlist(props) {
   const { cart } = props;
+  console.log(cart);
   return cart.length === 0 ? (
     <div className={styles.cartstyle}>
       {" "}

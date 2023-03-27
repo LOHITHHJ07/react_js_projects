@@ -3,15 +3,20 @@ import ItemShow from "./Components/ItemShow";
 import NavBar from "./Components/NavBar";
 import styles from "./App.module.css";
 import ItemAdded from "./Components/ItemAdded";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 function App() {
-  const [cart, setCart] = useState([]);
+  const cartFromLocal = JSON.parse(localStorage.getItem("cart") || "[]");
+  const [cart, setCart] = useState(cartFromLocal);
   const [show, setShow] = useState(false);
   const [notifcationArr, setNotifcationArr] = useState([]);
   const onClose = () => {
     setShow(false);
     setNotifcationArr([]);
   };
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
 
   const addCart = (item) => {
     setCart((cart) => {
@@ -22,10 +27,7 @@ function App() {
       } else {
         return [...cart, item];
       }
-
-      // cart.map(cartItem=> item.id === cartItem.id? {...item, qty: (cartItem.qty?? 0) + 1}: cartItem )
     });
-    // setCart([...cart, item]);
     setNotifcationArr([...notifcationArr, item]);
     setShow(true);
   };
