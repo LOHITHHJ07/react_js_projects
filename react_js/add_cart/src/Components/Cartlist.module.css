@@ -1,0 +1,13 @@
+.cartstyle
+{
+width: 33%;
+padding-top: 10px;
+padding-left: 20px;
+text-align: left;
+z-index: -1;
+
+}
+.netTotal
+{
+    border: solid 1px rgb(133, 133, 133);
+}

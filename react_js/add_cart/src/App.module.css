@@ -1,0 +1,38 @@
+
+
+div.container{
+  position: relative;
+  display: flex;
+  padding: 0;
+  display: flex;
+
+}
+.itemContainer
+{
+  
+  padding-top: 10px;
+  padding-left: 10px;
+  display: grid;
+  grid-template-columns: repeat(6,0fr);
+  column-gap: 20px;
+  max-height: 0rem;
+
+}
+.App 
+{
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+ 
+}
+.notifcation
+{
+  position:absolute;
+ margin-top: 0px;
+ margin-left: 82%;
+}
+.cartlist
+{
+  z-index: -1;
+}
