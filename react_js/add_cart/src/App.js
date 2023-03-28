@@ -1,19 +1,15 @@
 import Cartlist from "./Components/Cartlist";
 import ItemShow from "./Components/ItemShow";
 import NavBar from "./Components/NavBar";
-import styles from "./App.module.css";
 import ItemAdded from "./Components/ItemAdded";
+import styles from "./App.module.css";
 import { useState, useEffect } from "react";
+const cartFromLocal = JSON.parse(localStorage.getItem("cart") || "[]");
 
 function App() {
-  const cartFromLocal = JSON.parse(localStorage.getItem("cart") || "[]");
   const [cart, setCart] = useState(cartFromLocal);
-  const [show, setShow] = useState(false);
   const [notifcationArr, setNotifcationArr] = useState([]);
-  const onClose = () => {
-    setShow(false);
-    setNotifcationArr([]);
-  };
+
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
@@ -29,17 +25,15 @@ function App() {
       }
     });
     setNotifcationArr([...notifcationArr, item]);
-    setShow(true);
   };
 
   return (
     <div className={styles.App}>
       <div className={styles.notifcation}>
-        {notifcationArr.map((val) => {
-          return (
-            <ItemAdded item={val} show={show} onClose={onClose} cart={cart} />
-          );
-        })}
+        {!!notifcationArr &&
+          notifcationArr.map((val, index) => {
+            return <ItemAdded item={val} key={index} cart={cart} />;
+          })}
       </div>
       <NavBar></NavBar>
       <div className={styles.itemContainer}>

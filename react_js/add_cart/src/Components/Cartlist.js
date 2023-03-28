@@ -1,13 +1,11 @@
-import React from "react";
 import Alert from "react-bootstrap/Alert";
 import Itemlist from "./Itemlist";
 import ListGroup from "react-bootstrap/ListGroup";
-import styles from "./Cartlist.module.css";
 import Badge from "react-bootstrap/Badge";
+import styles from "./Cartlist.module.css";
 
 function Cartlist(props) {
   const { cart } = props;
-  console.log(cart);
   return cart.length === 0 ? (
     <div className={styles.cartstyle}>
       {" "}
@@ -19,7 +17,7 @@ function Cartlist(props) {
     <div className={styles.cartstyle}>
       <ListGroup as="ol" numbered>
         {cart.map((item, index) => {
-          return <Itemlist item={item} key={index}></Itemlist>;
+          return <Itemlist item={item} key={item.id}></Itemlist>;
         })}
       </ListGroup>
       {/* net total*/}
