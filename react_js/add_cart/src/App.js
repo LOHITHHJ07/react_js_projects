@@ -1,14 +1,19 @@
 import Cartlist from "./Components/Cartlist";
 import ItemShow from "./Components/ItemShow";
 import NavBar from "./Components/NavBar";
-import ItemAdded from "./Components/ItemAdded";
+import Notifcation from "./Components/Notifcation";
 import styles from "./App.module.css";
 import { useState, useEffect } from "react";
 const cartFromLocal = JSON.parse(localStorage.getItem("cart") || "[]");
-
 function App() {
   const [cart, setCart] = useState(cartFromLocal);
   const [notifcationArr, setNotifcationArr] = useState([]);
+
+  const onClose = (index) => {
+    setNotifcationArr((notifcationArr) => {
+      return notifcationArr.filter((val, i) => i !== index);
+    });
+  };
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
@@ -24,7 +29,10 @@ function App() {
         return [...cart, item];
       }
     });
-    setNotifcationArr([...notifcationArr, item]);
+    setNotifcationArr([
+      ...notifcationArr,
+      { ...item, timeStamp: new Date().toISOString() },
+    ]);
   };
 
   return (
@@ -32,7 +40,14 @@ function App() {
       <div className={styles.notifcation}>
         {!!notifcationArr &&
           notifcationArr.map((val, index) => {
-            return <ItemAdded item={val} key={index} cart={cart} />;
+            return (
+              <Notifcation
+                onClose={onClose}
+                item={val}
+                key={val.timeStamp}
+                index={index}
+              />
+            );
           })}
       </div>
       <NavBar></NavBar>

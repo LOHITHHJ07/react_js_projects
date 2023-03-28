@@ -1,19 +1,17 @@
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Toast from "react-bootstrap/Toast";
-import { useState } from "react";
 
-function ItemAdded(props) {
-  const [show, setShow] = useState(true);
-  const { item } = props;
-
+function Notifcation(props) {
+  const { item, onClose, index } = props;
   return (
     <Row>
       <Col xs={14}>
         <Toast
           className="top-end"
-          onClose={() => setShow(false)}
-          show={show}
+          onClose={() => {
+            onClose(index);
+          }}
           delay={3000}
           autohide
         >
@@ -28,4 +26,4 @@ function ItemAdded(props) {
   );
 }
 
-export default ItemAdded;
+export default Notifcation;

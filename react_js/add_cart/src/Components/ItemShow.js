@@ -1,6 +1,6 @@
 import React from "react";
 import ItemCard from "./ItemCard";
-import products from "./Items";
+import products from "./ItemsArray";
 function ItemShow(props) {
   const { addCart } = props;
   return (
