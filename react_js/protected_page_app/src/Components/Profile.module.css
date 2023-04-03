@@ -1,0 +1,10 @@
+.profile
+{  display: flex;
+    max-width: 800px;
+    margin: auto;
+
+    align-items: center;
+    padding-bottom: 20px;
+    font-size: 20PX;
+  
+}
