@@ -8,7 +8,9 @@ function Profile() {
   const auth = useAuth();
   const navigate = useNavigate();
   const handleLogout = (value) => {
+    auth.logout();
     navigate("/");
+    localStorage.clear();
   };
 
   return (
@@ -52,7 +54,7 @@ function Profile() {
           </table>
         </Card>
       </div>
-      <button onClick={handleLogout}>go to home</button>
+      <button onClick={handleLogout}>log out</button>
     </div>
   );
 }

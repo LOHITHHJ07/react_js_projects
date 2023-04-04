@@ -1,13 +1,10 @@
-import React from "react";
+import { Link } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import styles from "./NavBar.module.css";
-import { Link } from "react-router-dom";
-import { useAuth } from "./Authentication";
 
 function NavBar() {
-  const auth = useAuth();
   return (
     <div>
       <Navbar bg="light" variant="light">
@@ -52,21 +49,6 @@ function NavBar() {
                 Profile
               </Link>
             </Nav.Link>
-
-            {!auth.user && (
-              <Nav.Link>
-                <Link
-                  to="/login"
-                  style={{
-                    textDecoration: "none",
-                    color: "black",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Login
-                </Link>
-              </Nav.Link>
-            )}
           </Nav>
         </Container>
       </Navbar>

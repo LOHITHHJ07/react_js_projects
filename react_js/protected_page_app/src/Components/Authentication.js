@@ -1,20 +1,21 @@
-import { useContext, useState, createContext } from "react";
+import React, {
+  useContext,
+  useState,
+  createContext,
+  useMemo,
+  useCallback,
+} from "react";
 const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const login = (value) => {
+  const login = useCallback((value) => {
     setUser(value);
-  };
-  const logout = () => {
+  }, []);
+  const logout = useCallback(() => {
     setUser(null);
-  };
-
-  console.log({ user });
-  return (
-    <AuthContext.Provider value={{ user, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  }, []);
+  const value = useMemo(() => ({ user, login, logout }), [user, login, logout]);
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 export const useAuth = () => {
   return useContext(AuthContext);
