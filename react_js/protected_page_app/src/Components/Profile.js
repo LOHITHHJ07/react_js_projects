@@ -15,7 +15,7 @@ function Profile() {
 
   return (
     <div>
-      <div class="main">
+      <div>
         <h2>PROFILE</h2>
         <Card className={Styles.profile}>
           <table>
