@@ -1,9 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import ListGroup from "react-bootstrap/ListGroup";
 import Styles from "./Fetch.module.css";
 import Loader from "./Loader";
-
+import DataRender from "./DataRender";
 function Fetch() {
   const [records, setRecords] = useState([]);
   const [loader, setLoader] = useState(false);
@@ -14,6 +13,9 @@ function Fetch() {
       .then((data) => {
         setRecords(data);
         setLoader(false);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, []);
 
@@ -21,16 +23,7 @@ function Fetch() {
     <div>
       <h1 className={Styles.heading}> Using Fetch api</h1>
       {!loader ? (
-        <ListGroup as="ol" numbered className={Styles.list}>
-          {records.map((list, index) => (
-            <ListGroup.Item as="li" key={index}>
-              {" "}
-              <span>firstName:{list.firstName}</span>
-              <br />
-              <span>lasttName:{list.lastName}</span>
-            </ListGroup.Item>
-          ))}
-        </ListGroup>
+        <DataRender records={records}></DataRender>
       ) : (
         <Loader></Loader>
       )}

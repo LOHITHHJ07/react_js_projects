@@ -2,34 +2,31 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import Styles from "./UsingAxios.module.css";
-import ListGroup from "react-bootstrap/ListGroup";
 import Loader from "./Loader";
+import DataRender from "./DataRender";
 
-function List() {
+function UsingAxios() {
   const [records, setRecords] = useState([]);
   const [loader, setLoader] = useState(false);
 
   useEffect(() => {
     setLoader(true);
-    axios.get("api/contacts").then(({ data }) => {
-      setRecords(data);
-      setLoader(false);
-    });
+    axios
+      .get("api/contacts")
+      .then(({ data }) => {
+        setRecords(data);
+        setLoader(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
+
   return (
     <div>
       <h1 className={Styles.heading}>Using Axios</h1>
       {!loader ? (
-        <ListGroup as="ol" numbered className={Styles.list}>
-          {records.map((list, index) => (
-            <ListGroup.Item as="li" key={index}>
-              {" "}
-              <span>firstName:{list.firstName}</span>
-              <br />
-              <span>lasttName:{list.lastName}</span>
-            </ListGroup.Item>
-          ))}
-        </ListGroup>
+        <DataRender records={records}></DataRender>
       ) : (
         <Loader></Loader>
       )}
@@ -37,4 +34,4 @@ function List() {
   );
 }
 
-export default List;
+export default UsingAxios;
