@@ -1,5 +1,6 @@
 import "./App.css";
 import Fetch from "./Components/Fetch";
+import Loader from "./Components/Loader";
 import UsingAxios from "./Components/UsingAxios";
 
 function App() {
@@ -7,6 +8,7 @@ function App() {
     <div className="App">
       <Fetch></Fetch>
       <UsingAxios></UsingAxios>
+      {/* <Loader></Loader> */}
     </div>
   );
 }

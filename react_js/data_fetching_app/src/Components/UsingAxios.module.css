@@ -1,0 +1,15 @@
+.list {
+    margin-top: 50px;
+    max-width: 600px;
+    margin: auto;
+    border: 2px solid;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.heading {
+    margin-top: 50px;
+    max-width: 600px;
+    margin: auto;
+    border: 2px solid;
+}

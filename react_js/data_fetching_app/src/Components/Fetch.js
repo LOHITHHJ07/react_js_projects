@@ -1,53 +1,39 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
+import Styles from "./Fetch.module.css";
+import Loader from "./Loader";
 
 function Fetch() {
   const [records, setRecords] = useState([]);
+  const [loader, setLoader] = useState(false);
   useEffect(() => {
+    setLoader(true);
     fetch("api/contacts")
       .then((response) => response.json())
-      .then((data) => setRecords(data));
+      .then((data) => {
+        setRecords(data);
+        setLoader(false);
+      });
   }, []);
 
   return (
     <div>
-      <h1
-        style={{
-          marginTop: "50px",
-          maxWidth: "600px",
-          margin: "auto",
-          border: "2px solid",
-        }}
-      >
-        {" "}
-        Using Fetch api
-      </h1>
-      <ListGroup
-        as="ol"
-        numbered
-        style={{
-          maxWidth: "600px",
-          margin: "auto",
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          border: "2px solid",
-        }}
-      >
-        {records.map((list, index) => (
-          // <li key={index} style={{ padding: 0 }}>
-          //   <span>firstName:{list.firstName}</span>
-          //   <br />
-          //   <span>lasttName:{list.lastName}</span>
-          // </li>
-          <ListGroup.Item as="li" key={index}>
-            {" "}
-            <span>firstName:{list.firstName}</span>
-            <br />
-            <span>lasttName:{list.lastName}</span>
-          </ListGroup.Item>
-        ))}
-      </ListGroup>
+      <h1 className={Styles.heading}> Using Fetch api</h1>
+      {!loader ? (
+        <ListGroup as="ol" numbered className={Styles.list}>
+          {records.map((list, index) => (
+            <ListGroup.Item as="li" key={index}>
+              {" "}
+              <span>firstName:{list.firstName}</span>
+              <br />
+              <span>lasttName:{list.lastName}</span>
+            </ListGroup.Item>
+          ))}
+        </ListGroup>
+      ) : (
+        <Loader></Loader>
+      )}
     </div>
   );
 }

@@ -1,52 +1,38 @@
 import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import Styles from "./UsingAxios.module.css";
 import ListGroup from "react-bootstrap/ListGroup";
+import Loader from "./Loader";
 
 function List() {
   const [records, setRecords] = useState([]);
+  const [loader, setLoader] = useState(false);
 
   useEffect(() => {
-    axios.get("api/contacts").then(({ data }) => setRecords(data));
+    setLoader(true);
+    axios.get("api/contacts").then(({ data }) => {
+      setRecords(data);
+      setLoader(false);
+    });
   }, []);
   return (
     <div>
-      <h1
-        style={{
-          marginTop: "50px",
-          maxWidth: "600px",
-          margin: "auto",
-          border: "2px solid",
-        }}
-      >
-        {" "}
-        Using Axios
-      </h1>
-      <ListGroup
-        as="ol"
-        numbered
-        style={{
-          maxWidth: "600px",
-          margin: "auto",
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          border: "2px solid",
-        }}
-      >
-        {records.map((list, index) => (
-          // <li key={index} style={{ padding: 0 }}>
-          //   <span>firstName:{list.firstName}</span>
-          //   <br />
-          //   <span>lasttName:{list.lastName}</span>
-          // </li>
-          <ListGroup.Item as="li" key={index}>
-            {" "}
-            <span>firstName:{list.firstName}</span>
-            <br />
-            <span>lasttName:{list.lastName}</span>
-          </ListGroup.Item>
-        ))}
-      </ListGroup>
+      <h1 className={Styles.heading}>Using Axios</h1>
+      {!loader ? (
+        <ListGroup as="ol" numbered className={Styles.list}>
+          {records.map((list, index) => (
+            <ListGroup.Item as="li" key={index}>
+              {" "}
+              <span>firstName:{list.firstName}</span>
+              <br />
+              <span>lasttName:{list.lastName}</span>
+            </ListGroup.Item>
+          ))}
+        </ListGroup>
+      ) : (
+        <Loader></Loader>
+      )}
     </div>
   );
 }
