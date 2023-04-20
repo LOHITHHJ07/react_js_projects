@@ -11,10 +11,11 @@ function Fetch() {
     fetch("api/contacts")
       .then((response) => response.json())
       .then((data) => {
-        setRecords(data);
         setLoader(false);
+        setRecords(data);
       })
       .catch((err) => {
+        setLoader(false);
         console.log(err);
       });
   }, []);

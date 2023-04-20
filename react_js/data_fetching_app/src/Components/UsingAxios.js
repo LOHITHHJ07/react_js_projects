@@ -18,6 +18,7 @@ function UsingAxios() {
         setLoader(false);
       })
       .catch((err) => {
+        setLoader(false);
         console.log(err);
       });
   }, []);
