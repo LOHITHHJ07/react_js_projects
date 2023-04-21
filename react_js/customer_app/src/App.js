@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
-import "./App.css";
-import NavBar from "./Components/NavBar";
 import { Routes, Route } from "react-router-dom";
+import NavBar from "./Components/NavBar";
 import CustomerHome from "./Components/CustomerHome";
 import Updateform from "./Components/Updateform";
 import AddCustomer from "./Components/AddCustomer";
+import { useEffect, useState } from "react";
+import "./App.css";
 
 function App() {
   const [data, setData] = useState([]);
+
   useEffect(() => {
     const url = "ws/rest/com.axelor.apps.base.db.Partner/search";
     fetch(url, {

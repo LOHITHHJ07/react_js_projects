@@ -12,8 +12,10 @@ import FormControl from "@mui/material/FormControl";
 import NativeSelect from "@mui/material/NativeSelect";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function CustomerForm({ data, id }) {
+  const navigate = useNavigate();
   const [record, setRecord] = useState({
     name: data?.name,
     id: data?.id,
@@ -47,7 +49,7 @@ function CustomerForm({ data, id }) {
       body: JSON.stringify({
         data: record,
       }),
-    });
+    }).then(navigate("/"));
   };
   return (
     <Card
