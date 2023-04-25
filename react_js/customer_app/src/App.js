@@ -4,32 +4,13 @@ import CustomerHome from "./Components/CustomerHome";
 import { useEffect, useState } from "react";
 import "./App.css";
 import CustomerForm from "./Components/CustomerForm";
+import api from "./api.js";
 
 function App() {
   const [data, setData] = useState([]);
 
-  const api = {
-    search: async function () {
-      const url = "ws/rest/com.axelor.apps.base.db.Partner/search";
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          connection: "keep-alive",
-          "Content-Type": "application/json",
-          Authorization: "Basic YWRtaW46YWRtaW4=",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      return data;
-    },
-  };
-
   useEffect(() => {
-    api.search().then((record) => {
+    api.search("com.axelor.apps.base.db.Partner").then((record) => {
       setData(record.data);
     });
   }, []);

@@ -14,6 +14,7 @@ import NativeSelect from "@mui/material/NativeSelect";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import api from "../api.js";
 
 const theme = createTheme({
   palette: {
@@ -29,34 +30,10 @@ function CustomerForm() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const api = {
-    FormData: async function () {
-      const url = `ws/rest/com.axelor.apps.base.db.Partner/${id}/fetch`;
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          connection: "keep-alive",
-          "Content-Type": "application/json",
-          Authorization: "Basic YWRtaW46YWRtaW4=",
-        },
-        body: JSON.stringify({
-          _domain:
-            "self.isContact = false AND (self.isCustomer = true OR self.isProspect = true)",
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      return data;
-    },
-  };
-
   useEffect(() => {
     if (id) {
-      api.FormData().then((record) => {
-        setRecord(record.data[0]);
+      api.fetch("com.axelor.apps.base.db.Partner", id).then((record) => {
+        setRecord(record);
       });
     } else {
       setRecord(null);
@@ -67,19 +44,8 @@ function CustomerForm() {
     setRecord({ ...record, [e.target.name]: e.target.value });
   };
 
-  const update = () => {
-    const url = "ws/rest/com.axelor.apps.base.db.Partner";
-    fetch(url, {
-      method: "POST",
-      headers: {
-        connection: "keep-alive",
-        "Content-Type": "application/json",
-        Authorization: "Basic YWRtaW46YWRtaW4=",
-      },
-      body: JSON.stringify({
-        data: record,
-      }),
-    }).then(navigate("/"));
+  const update = (id) => {
+    api.update(record, "com.axelor.apps.base.db.Partner").then(navigate("/"));
   };
   return (
     <Card className={Styles.content}>
