@@ -7,6 +7,7 @@ import Popper from "@mui/material/Popper";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
 import Stack from "@mui/material/Stack";
+import Styles from "./CustomerTool.module.css";
 import { useEffect, useRef, useState } from "react";
 
 function CustomerTool() {
@@ -74,15 +75,7 @@ function CustomerTool() {
                 transformOrigin: "left down",
               }}
             >
-              <Paper
-                sx={{
-                  minWidth: "200px",
-                  minHeight: "40px",
-                  fontSize: "12px",
-                  padding: 0,
-                  margin: 0,
-                }}
-              >
+              <Paper className={Styles.Paper}>
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList
                     autoFocusItem={open}

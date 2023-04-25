@@ -5,6 +5,7 @@ import { Navigate, useLocation } from "react-router-dom";
 function RequireAuth({ children }) {
   const auth = useAuth();
   const location = useLocation();
+  console.log(location);
 
   if (!auth.user) {
     return (

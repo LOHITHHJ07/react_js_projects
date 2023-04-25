@@ -1,0 +1,60 @@
+.content
+{
+    margin-top: 5%;
+    margin-left: 10%;
+    max-width: 1500px;
+    box-shadow: 1px 1px 10px #888888 !important;
+
+}
+.cardImg
+{
+ 
+   
+   border: 1px solid black;
+    height: 150px;
+    max-width: 150px;
+    margin-left: 90px;
+}
+.partnertype
+{
+    padding-left: 10px;
+    position: relative;
+}
+.name
+{
+
+    min-width: 850px !important;
+
+}
+.individual
+{
+    padding: 300px;
+    display: flex;
+    align-items: start;
+}
+.civility
+{
+    padding-right: 30px  !important;
+    max-width: 400px !important;
+
+}
+
+.checkbox 
+{
+    padding-left: 300px !important;
+    display: flex;
+    align-items: start;
+    min-width: 800px;
+}
+.formFields ,.update
+{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+}
+.stack 
+{
+   max-width: 400px !important;
+}
+    
+    

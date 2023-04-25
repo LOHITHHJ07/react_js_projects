@@ -1,3 +1,4 @@
+import Styles from "./CustomerForm.module.css";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
@@ -11,25 +12,56 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import NativeSelect from "@mui/material/NativeSelect";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
-function CustomerForm({ data, id }) {
-  const navigate = useNavigate();
-  const [record, setRecord] = useState({
-    name: data?.name,
-    id: data?.id,
-    version: data?.version,
-  });
-
-  const theme = createTheme({
-    palette: {
-      neutral: {
-        main: "#64748B",
-        contrastText: "#fff",
-      },
+const theme = createTheme({
+  palette: {
+    neutral: {
+      main: "#64748B",
+      contrastText: "#fff",
     },
-  });
+  },
+});
+
+function CustomerForm() {
+  const [record, setRecord] = useState(null);
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const api = {
+    FormData: async function () {
+      const url = `ws/rest/com.axelor.apps.base.db.Partner/${id}/fetch`;
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          connection: "keep-alive",
+          "Content-Type": "application/json",
+          Authorization: "Basic YWRtaW46YWRtaW4=",
+        },
+        body: JSON.stringify({
+          _domain:
+            "self.isContact = false AND (self.isCustomer = true OR self.isProspect = true)",
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      return data;
+    },
+  };
+
+  useEffect(() => {
+    if (id) {
+      api.FormData().then((record) => {
+        setRecord(record.data[0]);
+      });
+    } else {
+      setRecord(null);
+    }
+  }, [id]);
 
   const handleChange = (e) => {
     setRecord({ ...record, [e.target.name]: e.target.value });
@@ -42,9 +74,7 @@ function CustomerForm({ data, id }) {
       headers: {
         connection: "keep-alive",
         "Content-Type": "application/json",
-        "Transfer-Encoding": "chunked",
         Authorization: "Basic YWRtaW46YWRtaW4=",
-        "X-CSRF-Token": "ca0c8d4baf4543f1bf649af3327e4b1b",
       },
       body: JSON.stringify({
         data: record,
@@ -52,14 +82,7 @@ function CustomerForm({ data, id }) {
     }).then(navigate("/"));
   };
   return (
-    <Card
-      sx={{
-        marginTop: "5%",
-        marginLeft: "10%",
-        maxWidth: "1500px",
-        boxShadow: "1px 1px 10px #888888",
-      }}
-    >
+    <Card className={Styles.content}>
       {" "}
       <CardContent
         sx={{ display: "flex", flexDirection: "column", position: "relative" }}
@@ -68,21 +91,16 @@ function CustomerForm({ data, id }) {
         <CardMedia
           component="img"
           alt="not  found"
-          sx={{
-            height: 150,
-            width: 150,
-            border: "1px solid",
-            marginLeft: "90px",
-          }}
+          className={Styles.cardImg}
           image="ws/rest/com.axelor.meta.db.MetaFile/130/content/download?image=true&v=0&parentId=130&parentModel=com.axelor.meta.db.MetaFile"
         />
-        <Box sx={{ paddingLeft: "10px", position: "relative" }}>
-          <FormControl sx={{ minWidth: "850px" }}>
+        <Box className={Styles.partnertype}>
+          <FormControl className={Styles.name}>
             <InputLabel variant="standard" htmlFor="uncontrolled-native">
               Partner-type
             </InputLabel>
             <NativeSelect
-              value={data?.partnerType}
+              defaultValue={record?.partnerType ?? ""}
               name="partnerType"
               onChange={handleChange}
             >
@@ -92,34 +110,27 @@ function CustomerForm({ data, id }) {
           </FormControl>
 
           <TextField
-            sx={{ minWidth: "850px" }}
+            className={Styles.name}
             id="standard-helperText"
             label="name"
             name="name"
-            defaultValue={data?.name}
+            value={record?.name ?? ""}
             onChange={handleChange}
             variant="standard"
           />
-          {record.partnerType === "2" ? (
+          {record?.partnerType === "2" ? (
             <Box
+              className={Styles.indidividual}
               sx={{
-                paddingLeft: "300px",
-                display: "flex",
-                alignItems: "start",
                 "& .MuiTextField-root": { m: 0.7, width: "28ch" },
               }}
             >
-              <FormControl
-                sx={{
-                  paddingRight: "30px",
-                  maxWidth: "400px",
-                }}
-              >
+              <FormControl className={Styles.civility}>
                 <InputLabel variant="standard" htmlFor="uncontrolled-native">
                   Civility
                 </InputLabel>
                 <NativeSelect
-                  defaultValue={record.Civility}
+                  value={record?.Civility ?? ""}
                   inputProps={{
                     name: "Civility",
                   }}
@@ -134,7 +145,7 @@ function CustomerForm({ data, id }) {
                 sx={{ paddingRight: "30px" }}
                 label="Name"
                 name="name"
-                defaultValue={data?.name}
+                value={record?.name ?? ""}
                 variant="standard"
                 onChange={handleChange}
               />
@@ -142,7 +153,7 @@ function CustomerForm({ data, id }) {
                 sx={{ paddingRight: "40px" }}
                 name="firstname"
                 label="Firstname"
-                defaultValue={data?.firstname}
+                value={record?.firstname ?? ""}
                 variant="standard"
                 onChange={handleChange}
               />
@@ -152,11 +163,8 @@ function CustomerForm({ data, id }) {
           )}
 
           <Box
+            className={Styles.Checkbox}
             sx={{
-              paddingLeft: "300px",
-              display: "flex",
-              alignItems: "start",
-              minWidth: "800px",
               "& .MuiTextField-root": { m: 3, width: "1000px" },
             }}
           >
@@ -170,16 +178,9 @@ function CustomerForm({ data, id }) {
           defaultValue="Partner details"
           variant="standard"
         />
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-
-            justifyContent: "space-between",
-          }}
-        >
+        <Box className={Styles.formFields}>
           <AutoCompleteFields
-            data={data}
+            data={record}
             setRecord={setRecord}
           ></AutoCompleteFields>
 
@@ -195,7 +196,7 @@ function CustomerForm({ data, id }) {
               name="registrationCode"
               label="Registration code"
               type="search"
-              defaultValue={data?.registrationCode}
+              value={record?.registrationCode ?? ""}
               variant="standard"
               sx={{ width: "100%" }}
               onChange={handleChange}
@@ -204,7 +205,7 @@ function CustomerForm({ data, id }) {
               label="Payment-delay"
               type="number"
               name="paymentDelay"
-              defaultValue={data?.paymentDelay}
+              value={record?.paymentDelay ?? ""}
               InputLabelProps={{
                 shrink: true,
               }}
@@ -216,7 +217,7 @@ function CustomerForm({ data, id }) {
               label="Turnover"
               type="number"
               name="saleTurnover"
-              defaultValue={data?.saleTurnover}
+              value={record?.saleTurnover ?? ""}
               InputLabelProps={{
                 shrink: true,
               }}
@@ -239,7 +240,7 @@ function CustomerForm({ data, id }) {
               label="Emp-Nbr"
               type="number"
               name="nbrEmployees"
-              defaultValue={data?.nbrEmployees}
+              value={record?.nbrEmployees ?? ""}
               InputLabelProps={{
                 shrink: true,
               }}
@@ -251,18 +252,12 @@ function CustomerForm({ data, id }) {
               type="search"
               variant="standard"
               name="taxNbr"
-              defaultValue={data?.taxNbr}
+              value={record?.taxNbr ?? ""}
               onChange={handleChange}
             />
           </Stack>
         </Box>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+        <Box className={Styles.update}>
           <ThemeProvider theme={theme}>
             <Button color="neutral" variant="contained" onClick={update}>
               Update

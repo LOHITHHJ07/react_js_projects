@@ -4,6 +4,7 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { useState, useEffect } from "react";
+import Styles from "./CustomerCheckbox.module.css";
 
 const data = {
   isProspect: {
@@ -44,9 +45,7 @@ function CustomerCheckbox({ setRecord }) {
       headers: {
         connection: "keep-alive",
         "Content-Type": "application/json",
-        "Transfer-Encoding": "chunked",
         Authorization: "Basic YWRtaW46YWRtaW4=",
-        "X-CSRF-Token": "ca0c8d4baf4543f1bf649af3327e4b1b",
       },
       body: JSON.stringify({
         action:
@@ -118,8 +117,8 @@ function CustomerCheckbox({ setRecord }) {
   };
 
   return (
-    <Box sx={{ display: "flex", flexWrap: "nowrap" }}>
-      <Box sx={{ display: "flex", flexWrap: "nowrap" }}>
+    <Box className={Styles.box}>
+      <Box className={Styles.box}>
         <FormControl sx={{ m: 3 }} component="fieldset" variant="standard">
           <FormGroup>
             <FormControlLabel
@@ -155,7 +154,7 @@ function CustomerCheckbox({ setRecord }) {
           </FormGroup>
         </FormControl>
       </Box>
-      <Box sx={{ display: "flex", flexWrap: "nowrap" }}>
+      <Box className={Styles.box}>
         <FormControl sx={{ m: 3 }} component="fieldset" variant="standard">
           <FormGroup>
             <FormControlLabel

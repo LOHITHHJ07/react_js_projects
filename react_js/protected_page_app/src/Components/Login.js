@@ -11,8 +11,10 @@ function Login() {
   const [flag, setFlag] = useState(false);
   const auth = useAuth();
   const location = useLocation();
+  console.log(location.state.path);
   const navigate = useNavigate();
   const redirect = location.state?.path || "/";
+  console.log(redirect);
   const updateForm = (e) => {
     setValues((existingValues) => ({
       ...existingValues,

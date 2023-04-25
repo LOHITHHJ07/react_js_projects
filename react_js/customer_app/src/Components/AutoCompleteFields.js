@@ -28,9 +28,7 @@ function AutoCompleteFields({ setRecord, data }) {
       headers: {
         connection: "keep-alive",
         "Content-Type": "application/json",
-        "Transfer-Encoding": "chunked",
         Authorization: "Basic YWRtaW46YWRtaW4=",
-        "X-CSRF-Token": "ca0c8d4baf4543f1bf649af3327e4b1b",
       },
       body: JSON.stringify({
         data: {
@@ -58,9 +56,7 @@ function AutoCompleteFields({ setRecord, data }) {
       headers: {
         connection: "keep-alive",
         "Content-Type": "application/json",
-        "Transfer-Encoding": "chunked",
         Authorization: "Basic YWRtaW46YWRtaW4=",
-        "X-CSRF-Token": "ca0c8d4baf4543f1bf649af3327e4b1b",
       },
       body: JSON.stringify({
         data: {
@@ -125,7 +121,7 @@ function AutoCompleteFields({ setRecord, data }) {
             }));
           }}
           {...defaultProps}
-          defaultValue={data?.partnerCategory}
+          value={data?.partnerCategory ?? null}
           disableCloseOnSelect
           renderInput={(params) => (
             <TextField {...params} label="Category" variant="standard" />
@@ -154,7 +150,7 @@ function AutoCompleteFields({ setRecord, data }) {
             }));
           }}
           {...SourceProps}
-          defaultValue={data?.source}
+          value={data?.source ?? null}
           disableCloseOnSelect
           renderInput={(params) => (
             <TextField {...params} label="Source" variant="standard" />
