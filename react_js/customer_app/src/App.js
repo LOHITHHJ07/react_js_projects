@@ -1,9 +1,9 @@
-import { Routes, Route } from "react-router-dom";
 import NavBar from "./Components/NavBar";
-import CustomerHome from "./Components/CustomerHome";
+import List from "./Components/List";
+import Form from "./Components/Form";
+import { Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./App.css";
-import CustomerForm from "./Components/CustomerForm";
 import api from "./api.js";
 
 function App() {
@@ -19,9 +19,9 @@ function App() {
     <div className="App">
       <NavBar></NavBar>
       <Routes>
-        <Route path="/" element={<CustomerHome data={data} />} />
-        <Route path="/new" element={<CustomerForm />} />
-        <Route path="/:id" element={<CustomerForm />} />
+        <Route path="/" element={<List data={data} />} />
+        <Route path="/new" element={<Form />} />
+        <Route path="/:id" element={<Form />} />
       </Routes>
     </div>
   );

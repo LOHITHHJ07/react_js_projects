@@ -46,7 +46,7 @@
     align-items: start;
     min-width: 800px;
 }
-.formFields ,.update
+.formFields 
 {
     display: flex !important;
     align-items: center !important;

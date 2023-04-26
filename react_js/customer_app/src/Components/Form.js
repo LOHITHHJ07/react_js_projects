@@ -32,7 +32,7 @@ function CustomerForm() {
 
   useEffect(() => {
     if (id) {
-      api.fetch("com.axelor.apps.base.db.Partner", id).then((record) => {
+      api.get("com.axelor.apps.base.db.Partner", id).then((record) => {
         setRecord(record);
       });
     } else {
@@ -223,7 +223,7 @@ function CustomerForm() {
             />
           </Stack>
         </Box>
-        <Box className={Styles.update}>
+        <Box>
           <ThemeProvider theme={theme}>
             <Button color="neutral" variant="contained" onClick={update}>
               Update
