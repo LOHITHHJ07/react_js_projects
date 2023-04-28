@@ -4,10 +4,14 @@ const headers = {
   Authorization: "Basic YWRtaW46YWRtaW4=",
 };
 
-const search = async (db, options) => {
+const search = async (db, options = {}) => {
   const url = `ws/rest/${db}/search`;
   try {
-    const response = await fetch(url, { method: "POST", headers });
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { ...headers, ...options.headers },
+      ...(options.body ? { body: JSON.stringify(options.body) } : {}),
+    });
     const data = await response.json();
     return data;
   } catch (error) {
@@ -15,7 +19,7 @@ const search = async (db, options) => {
   }
 };
 
-const get = async (db, id) => {
+const get = async (db, id, options = {}) => {
   const url = `ws/rest/${db}/${id}/fetch`;
   const body = {
     _domain:
@@ -24,7 +28,7 @@ const get = async (db, id) => {
   try {
     const response = await fetch(url, {
       method: "POST",
-      headers,
+      headers: { ...headers, ...options.headers },
       body: JSON.stringify(body),
     });
     const record = await response.json();
@@ -34,12 +38,12 @@ const get = async (db, id) => {
   }
 };
 
-const update = async (record, db) => {
+const update = async (record, db, options = {}) => {
   const url = `ws/rest/${db}`;
   try {
     await fetch(url, {
       method: "POST",
-      headers,
+      headers: { ...headers, ...options.headers },
       body: JSON.stringify({ data: record }),
     });
   } catch (error) {

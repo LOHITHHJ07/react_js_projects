@@ -2,8 +2,18 @@ import CustomerCard from "./CustomerCard";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Styles from "./CustomerHome.module.css";
+import api from "../api.js";
+import { useEffect, useState } from "react";
 
-function CustomerHome({ data }) {
+function CustomerHome() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    api.search("com.axelor.apps.base.db.Partner").then((record) => {
+      setData(record.data);
+    });
+  }, []);
+
   return (
     <Box sx={{ flexGrow: 1, overflowY: "auto" }}>
       <Grid

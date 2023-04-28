@@ -96,7 +96,7 @@ function CustomerForm() {
                   Civility
                 </InputLabel>
                 <NativeSelect
-                  value={record?.Civility ?? ""}
+                  defaultValue={record?.Civility ?? ""}
                   inputProps={{
                     name: "Civility",
                   }}

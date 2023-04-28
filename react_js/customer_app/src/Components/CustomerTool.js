@@ -56,7 +56,7 @@ function CustomerTool() {
           aria-controls={open ? "composition-menu" : undefined}
           aria-expanded={open ? "true" : undefined}
           aria-haspopup="true"
-          onClick={handleToggle}
+          onMouseOver={handleToggle}
         >
           <ArrowDropDownIcon />
         </Button>
