@@ -1,7 +1,5 @@
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import CardMedia from "@mui/material/CardMedia";
 import CustomerTool from "./CustomerTool";
@@ -35,14 +33,6 @@ function CustomerCard({ record }) {
         </Typography>
         <CustomerTool></CustomerTool>
       </CardContent>
-      <CardActions className={Styles.buttonaction}>
-        <Button variant="contained" size="small" className={Styles.button}>
-          Customer
-        </Button>
-        <Button variant="contained" size="small" className={Styles.button}>
-          supplier
-        </Button>
-      </CardActions>
     </Card>
   );
 }

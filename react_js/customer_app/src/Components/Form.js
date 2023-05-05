@@ -25,27 +25,28 @@ const theme = createTheme({
   },
 });
 
-function CustomerForm() {
+function Form() {
   const [record, setRecord] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (id) {
-      api.get("com.axelor.apps.base.db.Partner", id).then((record) => {
+      api.get("com.axelor.apps.base.db.Partner", { id }).then((record) => {
         setRecord(record);
       });
     } else {
-      setRecord(null);
+      setRecord({});
     }
   }, [id]);
-
   const handleChange = (e) => {
     setRecord({ ...record, [e.target.name]: e.target.value });
   };
 
-  const update = (id) => {
-    api.update(record, "com.axelor.apps.base.db.Partner").then(navigate("/"));
+  const update = (record) => {
+    api
+      .update("com.axelor.apps.base.db.Partner", { record })
+      .then(navigate("/"));
   };
   return (
     <Card className={Styles.content}>
@@ -66,7 +67,7 @@ function CustomerForm() {
               Partner-type
             </InputLabel>
             <NativeSelect
-              defaultValue={record?.partnerType ?? ""}
+              defaultValue={record?.partnerType ?? null}
               name="partnerType"
               onChange={handleChange}
             >
@@ -134,7 +135,10 @@ function CustomerForm() {
               "& .MuiTextField-root": { m: 3, width: "1000px" },
             }}
           >
-            <CustomerCheckbox setRecord={setRecord}></CustomerCheckbox>
+            <CustomerCheckbox
+              setRecord={setRecord}
+              record={record}
+            ></CustomerCheckbox>
           </Box>
         </Box>
         <TextField
@@ -225,7 +229,11 @@ function CustomerForm() {
         </Box>
         <Box>
           <ThemeProvider theme={theme}>
-            <Button color="neutral" variant="contained" onClick={update}>
+            <Button
+              color="neutral"
+              variant="contained"
+              onClick={() => update(record)}
+            >
               Update
             </Button>
           </ThemeProvider>
@@ -235,4 +243,4 @@ function CustomerForm() {
   );
 }
 
-export default CustomerForm;
+export default Form;

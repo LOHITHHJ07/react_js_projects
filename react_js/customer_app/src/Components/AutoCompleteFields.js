@@ -19,7 +19,6 @@ function AutoCompleteFields({ setRecord, data }) {
       }, timeout);
     };
   }
-
   const clickCategroy = useCallback((searchTextCat = "") => {
     const url = "ws/rest/com.axelor.apps.base.db.PartnerCategory/search";
     fetch(url, {
@@ -40,7 +39,6 @@ function AutoCompleteFields({ setRecord, data }) {
       .then((response) => response.json())
       .then((record) => {
         setCategory(record.data ?? []);
-        console.log(record.data);
       });
   }, []);
   const defaultProps = {

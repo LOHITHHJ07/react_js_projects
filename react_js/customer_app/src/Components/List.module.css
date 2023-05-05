@@ -1,0 +1,19 @@
+.button
+{
+   
+   background-color: rgb(117, 123, 136) !important;
+   color: white !important;
+   margin: 10px !important;
+}
+.home {
+    display: flex;
+    justify-content: start;
+    padding-top: 20px;
+    padding-left: 30px;
+}
+.noRecord
+{
+    display: flex ;
+    align-items: center ;
+    margin: auto;
+}

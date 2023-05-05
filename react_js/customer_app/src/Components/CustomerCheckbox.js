@@ -3,7 +3,6 @@ import FormControl from "@mui/material/FormControl";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import { useState, useEffect } from "react";
 import Styles from "./CustomerCheckbox.module.css";
 
 const data = {
@@ -28,61 +27,7 @@ const data = {
   },
 };
 
-function CustomerCheckbox({ setRecord }) {
-  const [CheckBox, setCheckbox] = useState({
-    isProspect: false,
-    isCarrier: false,
-    isFactor: false,
-    isCustomer: false,
-    isSupplier: false,
-    isInternal: false,
-  });
-
-  useEffect(() => {
-    const url = "ws/action";
-    fetch(url, {
-      method: "POST",
-      headers: {
-        connection: "keep-alive",
-        "Content-Type": "application/json",
-        Authorization: "Basic YWRtaW46YWRtaW4=",
-      },
-      body: JSON.stringify({
-        action:
-          "action-group-base-partner-onnew,com.axelor.meta.web.MetaController:moreAttrs",
-        data: {
-          criteria: [],
-          context: {
-            _model: "com.axelor.apps.base.db.Partner",
-            _isCustomer: "true",
-            _domain:
-              "self.isContact = false AND (self.isCustomer = true OR self.isProspect = true)",
-            "json-enhance": true,
-            _id: null,
-            partnerAttrs: "{}",
-            contactPartnerSet: [],
-          },
-        },
-      }),
-    })
-      .then((response) => response.json())
-      .then((response) =>
-        setCheckbox({
-          ...CheckBox,
-          isCustomer: response.data[1]?.values?.isCustomer,
-        })
-      );
-  }, []);
-
-  const {
-    isProspect,
-    isCarrier,
-    isFactor,
-    isCustomer,
-    isSupplier,
-    isInternal,
-  } = CheckBox;
-
+function CustomerCheckbox({ CheckBox, setCheckbox, record, setRecord }) {
   const handleCheckBox = (event) => {
     const checked = event.target.checked;
     const url = "ws/action";
@@ -107,9 +52,8 @@ function CustomerCheckbox({ setRecord }) {
         .then((response) => response.json())
         .then((record) => {
           const { values } = record.data[record.data.length - 1];
-
-          setCheckbox((data) => ({
-            ...CheckBox,
+          setRecord((record) => ({
+            ...record,
             ...values,
             [event.target.name]: checked,
           }));
@@ -124,7 +68,7 @@ function CustomerCheckbox({ setRecord }) {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={isProspect}
+                  checked={record?.isProspect ?? false}
                   onChange={handleCheckBox}
                   name="isProspect"
                 />
@@ -134,7 +78,7 @@ function CustomerCheckbox({ setRecord }) {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={isCarrier}
+                  checked={record?.isCarrier ?? false}
                   onChange={handleCheckBox}
                   name="isCarrier"
                 />
@@ -144,7 +88,7 @@ function CustomerCheckbox({ setRecord }) {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={isFactor}
+                  checked={record?.isFactor ?? false}
                   onChange={handleCheckBox}
                   name="isFactor"
                 />
@@ -160,7 +104,7 @@ function CustomerCheckbox({ setRecord }) {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={isCustomer}
+                  checked={record?.isCustomer ?? false}
                   onChange={handleCheckBox}
                   name="isCustomer"
                 />
@@ -170,7 +114,7 @@ function CustomerCheckbox({ setRecord }) {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={isSupplier}
+                  checked={record?.isSupplier ?? false}
                   onChange={handleCheckBox}
                   name="isSupplier"
                 />
@@ -180,7 +124,7 @@ function CustomerCheckbox({ setRecord }) {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={isInternal}
+                  checked={record?.isInternal ?? false}
                   onChange={handleCheckBox}
                   name="isInternal"
                 />
