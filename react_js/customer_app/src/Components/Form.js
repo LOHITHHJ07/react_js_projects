@@ -25,7 +25,7 @@ const theme = createTheme({
   },
 });
 
-function Form() {
+function Form({ setSearchText }) {
   const [record, setRecord] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ function Form() {
         setRecord(record);
       });
     } else {
-      setRecord({});
+      setRecord(null);
     }
   }, [id]);
   const handleChange = (e) => {
@@ -46,8 +46,15 @@ function Form() {
   const update = (record) => {
     api
       .update("com.axelor.apps.base.db.Partner", { record })
-      .then(navigate("/"));
+      .then(() => navigate("/"));
   };
+  const remove = (record) => {
+    const data = [{ id: record.id, version: record.version }];
+    api
+      .Delete("com.axelor.apps.base.db.Partner/removeAll", { data })
+      .then(() => setSearchText(null), navigate("/"));
+  };
+
   return (
     <Card className={Styles.content}>
       {" "}
@@ -230,12 +237,25 @@ function Form() {
         <Box>
           <ThemeProvider theme={theme}>
             <Button
+              className={Styles.button}
               color="neutral"
               variant="contained"
               onClick={() => update(record)}
             >
               Update
             </Button>
+            {record?.id ? (
+              <Button
+                className={Styles.button}
+                color="neutral"
+                variant="contained"
+                onClick={() => remove(record)}
+              >
+                Delete
+              </Button>
+            ) : (
+              ""
+            )}
           </ThemeProvider>
         </Box>
       </CardContent>

@@ -30,6 +30,7 @@ const data = {
 function CustomerCheckbox({ CheckBox, setCheckbox, record, setRecord }) {
   const handleCheckBox = (event) => {
     const checked = event.target.checked;
+    setRecord((record) => ({ ...record, [event.target.name]: checked }));
     const url = "ws/action";
     if (event.target.name !== "isInternal")
       fetch(url, {
@@ -55,7 +56,6 @@ function CustomerCheckbox({ CheckBox, setCheckbox, record, setRecord }) {
           setRecord((record) => ({
             ...record,
             ...values,
-            [event.target.name]: checked,
           }));
         });
   };

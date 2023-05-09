@@ -14,6 +14,8 @@ const search = async (db, options = {}) => {
       headers: { ...headers, ...options.headers },
       body: JSON.stringify({
         ...options.body,
+        sortBy: null,
+        feilds: ["id", "name", "code"],
         limit: options.limit,
         offset: options.offset,
         total: options.total,
@@ -56,8 +58,24 @@ const update = async (db, options = {}) => {
     await fetch(url, {
       method: "POST",
       headers: { ...headers, ...options.headers },
-      ...(options.body ? { body: JSON.stringify(options.body) } : {}),
-      body: JSON.stringify({ _domain: Domain, data: options.record }),
+      body: JSON.stringify({ data: options.record }),
+    });
+    // const customerData = await url.json();
+    // return customerData.data[0];
+  } catch (error) {
+    throw new Error(
+      `Failed to execute update API for ${db}. Error: ${error.message}`
+    );
+  }
+};
+
+const Delete = async (db, options = {}) => {
+  const url = `ws/rest/${db}`;
+  try {
+    await fetch(url, {
+      method: "POST",
+      headers: { ...headers, ...options.headers },
+      body: JSON.stringify({ records: options.data }),
     });
   } catch (error) {
     throw new Error(
@@ -66,5 +84,5 @@ const update = async (db, options = {}) => {
   }
 };
 
-const api = { search, get, update };
+const api = { search, get, update, Delete };
 export default api;

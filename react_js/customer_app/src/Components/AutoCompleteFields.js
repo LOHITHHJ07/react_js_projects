@@ -41,6 +41,7 @@ function AutoCompleteFields({ setRecord, data }) {
         setCategory(record.data ?? []);
       });
   }, []);
+
   const defaultProps = {
     options: Category,
     getOptionLabel: (option) => option.name,
@@ -120,6 +121,7 @@ function AutoCompleteFields({ setRecord, data }) {
           }}
           {...defaultProps}
           value={data?.partnerCategory ?? null}
+          isOptionEqualToValue={(option, value) => option.name === value}
           disableCloseOnSelect
           renderInput={(params) => (
             <TextField {...params} label="Category" variant="standard" />

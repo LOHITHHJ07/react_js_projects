@@ -14,7 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<List searchText={searchText} />} />
         <Route path="/new" element={<Form />} />
-        <Route path="/:id" element={<Form />} />
+        <Route path="/:id" element={<Form setSearchText={setSearchText} />} />
       </Routes>
     </div>
   );

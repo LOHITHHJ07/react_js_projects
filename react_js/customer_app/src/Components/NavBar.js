@@ -11,7 +11,15 @@ function NavBar({ searchText, setSearchText }) {
     <Navbar bg="light" variant="light">
       <Container>
         <Link to="/" className={Styles.navbar}>
-          <Navbar.Brand>CUSTOMER- CRUD-APP</Navbar.Brand>
+          <Navbar.Brand
+            onClick={() => {
+              if (history.pathname === "/") {
+                window.location.reload();
+              }
+            }}
+          >
+            CUSTOMER- CRUD-APP
+          </Navbar.Brand>
         </Link>
         {history.pathname === "/" && (
           <Link to="new" className={Styles.navbar}>
