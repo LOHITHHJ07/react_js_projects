@@ -12,14 +12,7 @@ const search = async (db, options = {}) => {
     const response = await fetch(url, {
       method: "POST",
       headers: { ...headers, ...options.headers },
-      body: JSON.stringify({
-        ...options.body,
-        sortBy: null,
-        feilds: ["id", "name", "code"],
-        limit: options.limit,
-        offset: options.offset,
-        total: options.total,
-      }),
+      body: JSON.stringify(options.body),
     });
     const data = await response.json();
     return data;
@@ -60,8 +53,6 @@ const update = async (db, options = {}) => {
       headers: { ...headers, ...options.headers },
       body: JSON.stringify({ data: options.record }),
     });
-    // const customerData = await url.json();
-    // return customerData.data[0];
   } catch (error) {
     throw new Error(
       `Failed to execute update API for ${db}. Error: ${error.message}`
@@ -83,6 +74,48 @@ const Delete = async (db, options = {}) => {
     );
   }
 };
+const handleCheckBox = async (event, options = {}) => {
+  const url = "ws/action";
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        ...headers,
+      },
+      body: JSON.stringify({
+        action: options.data[event.target.name].action,
+        model: "com.axelor.apps.base.db.Partner",
+        criteria: [],
+      }),
+    });
 
-const api = { search, get, update, Delete };
+    const record = await response.json();
+    return record;
+  } catch (error) {
+    throw new Error(` Error: ${error.message}`);
+  }
+};
+// const handleCheckBox = (event ) => {
+//   const url = "ws/action";
+//      try{
+//    const response=await fetch(url, {
+//       method: "POST",
+//       headers: { ...headers, ...options.headers },
+//       body:JSON.stringify({
+//         action: data[event.target.name].action,
+//         model: "com.axelor.apps.base.db.Partner",
+//         criteria: [],
+//       }),
+// });
+//      const record = await response.json();
+//      return record}
+
+//     catch (error) {
+//     throw new Error(
+//       `Failed to execute update API for ${db}. Error: ${error.message}`
+//     );
+//     }
+// };
+
+const api = { search, get, update, Delete, handleCheckBox };
 export default api;

@@ -1,4 +1,3 @@
-import Styles from "./CustomerForm.module.css";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
@@ -11,10 +10,11 @@ import AutoCompleteFields from "./AutoCompleteFields";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import NativeSelect from "@mui/material/NativeSelect";
+import api from "../api.js";
+import styles from "./CustomerForm.module.css";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import api from "../api.js";
 
 const theme = createTheme({
   palette: {
@@ -40,7 +40,7 @@ function Form({ setSearchText }) {
     }
   }, [id]);
   const handleChange = (e) => {
-    setRecord({ ...record, [e.target.name]: e.target.value });
+    setRecord(() => ({ ...record, [e.target.name]: e.target.value }));
   };
 
   const update = (record) => {
@@ -52,11 +52,11 @@ function Form({ setSearchText }) {
     const data = [{ id: record.id, version: record.version }];
     api
       .Delete("com.axelor.apps.base.db.Partner/removeAll", { data })
-      .then(() => setSearchText(null), navigate("/"));
+      .then(() => navigate("/"));
   };
 
   return (
-    <Card className={Styles.content}>
+    <Card className={styles.content}>
       {" "}
       <CardContent
         sx={{ display: "flex", flexDirection: "column", position: "relative" }}
@@ -65,16 +65,15 @@ function Form({ setSearchText }) {
         <CardMedia
           component="img"
           alt="not  found"
-          className={Styles.cardImg}
-          image="ws/rest/com.axelor.meta.db.MetaFile/130/content/download?image=true&v=0&parentId=130&parentModel=com.axelor.meta.db.MetaFile"
+          className={styles.cardImg}
         />
-        <Box className={Styles.partnertype}>
-          <FormControl className={Styles.name}>
+        <Box className={styles.partnertype}>
+          <FormControl className={styles.name}>
             <InputLabel variant="standard" htmlFor="uncontrolled-native">
               Partner-type
             </InputLabel>
             <NativeSelect
-              defaultValue={record?.partnerType ?? null}
+              defaultValue={record?.partnerType ?? ""}
               name="partnerType"
               onChange={handleChange}
             >
@@ -84,7 +83,7 @@ function Form({ setSearchText }) {
           </FormControl>
 
           <TextField
-            className={Styles.name}
+            className={styles.name}
             id="standard-helperText"
             label="name"
             name="name"
@@ -94,12 +93,11 @@ function Form({ setSearchText }) {
           />
           {record?.partnerType === "2" ? (
             <Box
-              className={Styles.indidividual}
               sx={{
                 "& .MuiTextField-root": { m: 0.7, width: "28ch" },
               }}
             >
-              <FormControl className={Styles.civility}>
+              <FormControl className={styles.civility}>
                 <InputLabel variant="standard" htmlFor="uncontrolled-native">
                   Civility
                 </InputLabel>
@@ -137,7 +135,7 @@ function Form({ setSearchText }) {
           )}
 
           <Box
-            className={Styles.Checkbox}
+            className={styles.Checkbox}
             sx={{
               "& .MuiTextField-root": { m: 3, width: "1000px" },
             }}
@@ -151,11 +149,10 @@ function Form({ setSearchText }) {
         <TextField
           disabled
           id="standard-disabled"
-          label=""
-          defaultValue="Partner details"
+          label="Partner details"
           variant="standard"
         />
-        <Box className={Styles.formFields}>
+        <Box className={styles.formFields}>
           <AutoCompleteFields
             data={record}
             setRecord={setRecord}
@@ -237,7 +234,7 @@ function Form({ setSearchText }) {
         <Box>
           <ThemeProvider theme={theme}>
             <Button
-              className={Styles.button}
+              className={styles.button}
               color="neutral"
               variant="contained"
               onClick={() => update(record)}
@@ -246,7 +243,7 @@ function Form({ setSearchText }) {
             </Button>
             {record?.id ? (
               <Button
-                className={Styles.button}
+                className={styles.button}
                 color="neutral"
                 variant="contained"
                 onClick={() => remove(record)}

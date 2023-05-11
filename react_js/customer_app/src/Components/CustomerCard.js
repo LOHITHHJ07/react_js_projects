@@ -3,7 +3,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import CardMedia from "@mui/material/CardMedia";
 import CustomerTool from "./CustomerTool";
-import Styles from "./CustomerCard.module.css";
+import styles from "./CustomerCard.module.css";
 import { useNavigate } from "react-router-dom";
 
 function CustomerCard({ record }) {
@@ -14,23 +14,25 @@ function CustomerCard({ record }) {
       onClick={() => {
         navigate(`/${record.id}`);
       }}
-      className={Styles.card}
+      className={styles.card}
     >
-      <CardContent className={Styles.Cardcontent}>
-        <Typography className={Styles.fullname} variant="h3" gutterBottom>
+      <CardContent className={styles.Cardcontent}>
+        <Typography className={styles.fullname} variant="h3" gutterBottom>
           {record?.fullName ?? ""}
         </Typography>
-        <CardMedia className={Styles.cardimg} component="img" />
-        <Typography variant="body2" className={Styles.cardbody}>
-          {record.registrationCode} <br />
-          {record.mainAddress?.fullName} <br /> {record.fixedPhone}
-          <br />
-          {record.emailAddress?.name ?? ""} <br />{" "}
-          {record.partnerCategory?.name ?? ""} <br /> Companies :{" "}
-          {record.companyStr} <br />
-          Fiscal position :
-          <br />
-        </Typography>
+        <CardMedia className={styles.cardimg} component="img" />
+        <div className={styles.cardbody}>
+          <ul className={styles.list}>
+            <li> {record.registrationCode}</li>
+            <li>{record.mainAddress?.fullName} </li>
+            <li> {record.fixedPhone}</li>
+            <li> {record.emailAddress?.name ?? ""} </li>
+            <li> {record.partnerCategory?.name ?? ""}</li>
+            <li>Companies : {record.companyStr}</li>
+            <li> Fiscal position :{record?.fiscalPosition?.name ?? ""}</li>
+          </ul>
+        </div>
+
         <CustomerTool></CustomerTool>
       </CardContent>
     </Card>

@@ -1,30 +1,39 @@
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import Styles from "./searchbar.module.css";
-import { useMemo } from "react";
+import styles from "./searchbar.module.css";
+import { useEffect, useMemo, useState } from "react";
+
+function debounce(func, timeout = 500) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      func(...args);
+    }, timeout);
+  };
+}
 
 function SearchBar({ searchText, setSearchText }) {
-  function debounce(func, timeout = 500) {
-    let timer;
-    return (...args) => {
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        func(...args);
-      }, timeout);
-    };
-  }
-
-  const handleClick = useMemo(
+  const [input, setInput] = useState("");
+  const updateSearchText = useMemo(
     () =>
-      debounce((e) => {
-        setSearchText(e.target.value);
+      debounce((searchText) => {
+        setSearchText(searchText);
       }),
-    [searchText]
+    [setSearchText]
   );
 
+  useEffect(() => {
+    updateSearchText(input);
+  }, [input, updateSearchText]);
+
+  const handleClick = (e) => {
+    setInput(e.target.value);
+  };
   return (
-    <Box className={Styles.search}>
+    <Box className={styles.search}>
       <TextField
+        value={input}
         id="outlined-basic"
         label="Search"
         variant="outlined"
